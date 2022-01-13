@@ -1,7 +1,7 @@
 import Head from "../../components/Header";
 import RenderCards from "../../components/RenderCards";
-import { GET_ALL_BLOGS } from "../../graphql/query";
-import { fetchData } from "../../lib/fetch";
+import { connectDatabase } from "../../lib/db";
+import { fetchBlogs } from "../../lib/fetch";
 
 const AllBlogs = ({ blogs }) => {
 	if (blogs?.error)
@@ -32,11 +32,10 @@ export default AllBlogs;
 
 export const getStaticProps = async () => {
 	let blogs;
-	try {
-		blogs = await fetchData(GET_ALL_BLOGS(10));
-	} catch (err) {
-		blogs = { error: err };
-	}
+	connectDatabase();
+	blogs = await fetchBlogs(10);
+	blogs = { blogs };
+
 	return {
 		props: {
 			blogs,

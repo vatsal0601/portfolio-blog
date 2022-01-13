@@ -32,6 +32,7 @@ const About = () => {
 							objectPosition="50% 10%"
 							className="rounded-md"
 							onLoad={() => setIsLoading(false)}
+							priority="true"
 						/>
 					</div>
 					<div className="max-w-prose mx-auto space-y-3">

@@ -3,8 +3,8 @@ import Image from "next/image";
 import Markdown from "../../components/Markdown";
 import { useState, useRef } from "react";
 import { useRouter } from "next/router";
-import { GET_PROJECT, GET_ALL_PROJECTS_ID } from "../../graphql/query";
-import { fetchData } from "../../lib/fetch";
+import { connectDatabase } from "../../lib/db";
+import { fetchProject, fetchProjectIds } from "../../lib/fetch";
 import { useTOC } from "../../lib/useTOC";
 
 const Project = ({ project }) => {
@@ -97,17 +97,14 @@ const Project = ({ project }) => {
 export default Project;
 
 export const getStaticPaths = async () => {
-	let projectIds;
-	try {
-		projectIds = await fetchData(GET_ALL_PROJECTS_ID);
-		projectIds = projectIds.getAllProjectsId.map((id) => ({
-			params: {
-				id,
-			},
-		}));
-	} catch (err) {
-		projectIds = [];
-	}
+	let projectIds = [];
+	connectDatabase();
+	projectIds = await fetchProjectIds();
+	projectIds = projectIds.map((id) => ({
+		params: {
+			id,
+		},
+	}));
 
 	return {
 		paths: projectIds,
@@ -117,13 +114,9 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
 	let project;
+	connectDatabase();
 	const { id } = context.params;
-	try {
-		project = await fetchData(GET_PROJECT(id));
-		project = project.project;
-	} catch (err) {
-		project = { error: err };
-	}
+	project = await fetchProject(id);
 
 	return {
 		props: {

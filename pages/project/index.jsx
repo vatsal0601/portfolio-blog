@@ -1,7 +1,7 @@
 import Head from "../../components/Header";
 import RenderCards from "../../components/RenderCards";
-import { GET_ALL_PROJECTS } from "../../graphql/query";
-import { fetchData } from "../../lib/fetch";
+import { connectDatabase } from "../../lib/db";
+import { fetchProjects } from "../../lib/fetch";
 
 const AllProjects = ({ projects }) => {
 	if (projects?.error)
@@ -31,11 +31,9 @@ export default AllProjects;
 
 export const getStaticProps = async () => {
 	let projects;
-	try {
-		projects = await fetchData(GET_ALL_PROJECTS(10));
-	} catch (err) {
-		projects = { error: err };
-	}
+	connectDatabase();
+	projects = await fetchProjects(10);
+	projects = { projects };
 	return {
 		props: {
 			projects,

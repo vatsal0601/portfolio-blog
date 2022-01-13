@@ -3,8 +3,8 @@ import Image from "next/image";
 import Markdown from "../../components/Markdown";
 import { useState, useRef } from "react";
 import { useRouter } from "next/router";
-import { GET_BLOG, GET_ALL_BLOGS_ID } from "../../graphql/query";
-import { fetchData } from "../../lib/fetch";
+import { connectDatabase } from "../../lib/db";
+import { fetchBlog, fetchBlogIds } from "../../lib/fetch";
 import { useTOC } from "../../lib/useTOC";
 
 const Blog = ({ blog }) => {
@@ -79,17 +79,14 @@ const Blog = ({ blog }) => {
 export default Blog;
 
 export const getStaticPaths = async () => {
-	let blogIds;
-	try {
-		blogIds = await fetchData(GET_ALL_BLOGS_ID);
-		blogIds = blogIds.getAllBlogsId.map((id) => ({
-			params: {
-				id,
-			},
-		}));
-	} catch (err) {
-		blogIds = [];
-	}
+	let blogIds = [];
+	connectDatabase();
+	blogIds = await fetchBlogIds();
+	blogIds = blogIds.map((id) => ({
+		params: {
+			id,
+		},
+	}));
 
 	return {
 		paths: blogIds,
@@ -99,13 +96,9 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
 	let blog;
+	connectDatabase();
 	const { id } = context.params;
-	try {
-		blog = await fetchData(GET_BLOG(id));
-		blog = blog.blog;
-	} catch (err) {
-		blog = { error: err };
-	}
+	blog = await fetchBlog(id);
 
 	return {
 		props: {

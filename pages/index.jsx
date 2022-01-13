@@ -3,8 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import RenderCards from "../components/RenderCards";
 import src from "../public/images/image.jpg";
-import { fetchData } from "../lib/fetch";
-import { GET_ALL_PROJECTS, GET_ALL_BLOGS } from "../graphql/query";
+import { connectDatabase } from "../lib/db";
+import { fetchProjects, fetchBlogs } from "../lib/fetch";
 
 const Home = ({ projects, blogs }) => {
 	return (
@@ -25,6 +25,7 @@ const Home = ({ projects, blogs }) => {
 							layout="responsive"
 							objectFit="cover"
 							objectPosition="left center"
+							priority="true"
 							className="rounded-full"
 						/>
 					</div>
@@ -88,13 +89,12 @@ export default Home;
 
 export const getStaticProps = async () => {
 	let projects, blogs;
-	try {
-		projects = await fetchData(GET_ALL_PROJECTS(3));
-		blogs = await fetchData(GET_ALL_BLOGS(3));
-	} catch (err) {
-		projects = { error: err };
-		blogs = { error: err };
-	}
+	connectDatabase();
+	projects = await fetchProjects(3);
+	projects = { projects };
+	blogs = await fetchBlogs(3);
+	blogs = { blogs };
+
 	return {
 		props: {
 			projects,

@@ -21,7 +21,6 @@
 rest
 .vscode
 posts
-.env
 
 # debug
 npm-debug.log*
