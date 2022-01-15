@@ -21,6 +21,7 @@
 rest
 .vscode
 posts
+image-format
 
 # debug
 npm-debug.log*

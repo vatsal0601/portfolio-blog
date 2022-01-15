@@ -11,7 +11,7 @@ const Blog = ({ blog }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const router = useRouter();
 	const headingRef = useRef(null);
-	const { toc } = useTOC(headingRef);
+	const [toc] = useTOC(headingRef);
 
 	if (blog?.error)
 		return (

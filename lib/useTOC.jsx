@@ -30,5 +30,5 @@ export const useTOC = (headingRef) => {
 		}
 	}, [headingRef]);
 
-	return { toc };
+	return [toc];
 };

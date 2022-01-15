@@ -11,7 +11,7 @@ const Project = ({ project }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const router = useRouter();
 	const headingRef = useRef(null);
-	const { toc } = useTOC(headingRef);
+	const [toc] = useTOC(headingRef);
 
 	if (project?.error)
 		return (
