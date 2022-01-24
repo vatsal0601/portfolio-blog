@@ -11,11 +11,5 @@ module.exports = {
 			},
 		},
 	},
-	variants: {
-		extend: {
-			textColor: ["active"],
-			backgroundColor: ["active"],
-		},
-	},
 	plugins: [require("@tailwindcss/typography")],
 };

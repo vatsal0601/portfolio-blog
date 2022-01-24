@@ -1,6 +1,6 @@
 import Head from "../../components/Header";
 import Image from "next/image";
-import Markdown from "../../components/Markdown";
+import RenderPost from "../../components/RenderPost";
 import { useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { connectDatabase } from "../../lib/db";
@@ -23,7 +23,7 @@ const Project = ({ project }) => {
 	const { title, excerpt, coverImageUrl, date, github, link, content } = project;
 	return (
 		<>
-			<Head title={title.slice(3)} description={excerpt} />
+			<Head title={title.slice(2)} description={excerpt} />
 			<main className="container mx-auto py-2 px-5 md:px-10 space-y-3">
 				<button
 					onClick={() => router.back()}
@@ -73,19 +73,7 @@ const Project = ({ project }) => {
 							/>
 						</div>
 					</section>
-					<div className="xl:flex gap-28">
-						<aside className="hidden xl:block bg-blue-100 dark:bg-zinc-800 sticky top-28 w-96 h-full p-8 rounded-md">
-							<p className="text-sm text-blue-700 dark:text-blue-500 font-semibold">On this page</p>
-							<div className="prose prose-zinc prose-a:no-underline prose-a:font-normal first:prose-ul:pl-0 prose-ul:list-outside prose-ul:list-none prose-li:pl-0 dark:prose-invert">
-								<Markdown content={toc} />
-							</div>
-						</aside>
-						<section
-							ref={headingRef}
-							className="prose lg:prose-lg prose-zinc prose-blue prose-img:rounded-md prose-pre:rounded-md prose-headings:scroll-m-20 lg:prose-headings:scroll-m-24 dark:prose-invert">
-							<Markdown content={content} />
-						</section>
-					</div>
+					<RenderPost content={content} headingRef={headingRef} toc={toc} />
 				</article>
 			</main>
 		</>
