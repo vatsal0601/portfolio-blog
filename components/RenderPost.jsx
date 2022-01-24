@@ -5,7 +5,7 @@ const RenderPost = ({ content, toc, headingRef }) => {
 		<div className="xl:flex gap-28">
 			<aside className="hidden xl:block bg-blue-100 dark:bg-zinc-800 sticky top-28 w-96 h-full p-8 rounded-md">
 				<p className="text-sm text-blue-700 dark:text-blue-500 font-semibold">On this page</p>
-				<div className="prose prose-zinc prose-a:no-underline prose-a:font-normal prose-a:hover:text-blue-600 first:prose-ul:pl-0 prose-ul:list-outside prose-ul:list-none prose-li:pl-0 dark:prose-invert">
+				<div className="prose prose-zinc hover:prose-a:text-blue-600 prose-a:no-underline prose-a:font-normal first:prose-ul:pl-0 prose-ul:list-outside prose-ul:list-none prose-li:pl-0 dark:prose-invert">
 					<Markdown content={toc} />
 				</div>
 			</aside>
