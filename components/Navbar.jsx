@@ -89,7 +89,7 @@ const Navbar = () => {
 							</li>
 						))}
 					</ul>
-					<div className="pl-2">
+					<div className="pl-3">
 						<button
 							onClick={toggleDarkMode}
 							aria-label="Theme-Switcher"
