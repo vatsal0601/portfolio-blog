@@ -10,7 +10,7 @@ class MyDocument extends Document {
 		return (
 			<Html lang="en" className="scroll-smooth">
 				<Head />
-				<body className="min-h-screen relative pb-48 lg:pb-56 pt-24 lg:pt-32 dark:bg-zinc-900 transition-colors duration-300 subpixel-antialiased">
+				<body className="min-h-screen relative pb-48 lg:pb-56 pt-24 lg:pt-32 selection:bg-blue-100 dark:selection:bg-zinc-800 dark:bg-zinc-900 transition-colors duration-300 subpixel-antialiased">
 					<Main />
 					<NextScript />
 				</body>

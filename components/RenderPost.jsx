@@ -11,7 +11,7 @@ const RenderPost = ({ content, toc, headingRef }) => {
 			</aside>
 			<section
 				ref={headingRef}
-				className="prose lg:prose-lg prose-zinc prose-blue prose-img:rounded-md prose-pre:rounded-md prose-headings:scroll-m-20 lg:prose-headings:scroll-m-24 dark:prose-invert">
+				className="prose lg:prose-lg prose-zinc prose-blue prose-img:rounded-md prose-headings:scroll-m-20 lg:prose-headings:scroll-m-24 dark:prose-invert">
 				<Markdown content={content} />
 			</section>
 		</div>

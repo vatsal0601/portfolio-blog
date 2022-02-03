@@ -16,7 +16,7 @@ const socialLinks = [
 
 const Footer = () => {
 	return (
-		<footer className="bg-white dark:bg-zinc-900 w-full absolute z-0 bottom-0 py-3 space-y-3 text-center border-t border-zinc-200 dark:border-zinc-800">
+		<footer className="bg-white dark:bg-zinc-900 w-full absolute z-0 bottom-0 py-3 space-y-3 text-center border-t border-zinc-200 dark:border-zinc-800 print:hidden">
 			<div className="flex justify-evenly">
 				<div className="flex flex-col gap-3">
 					{pageLinks.map(({ name, link }, index) => (

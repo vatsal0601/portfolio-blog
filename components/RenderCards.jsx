@@ -1,4 +1,4 @@
-import Card from "./card";
+import Card from "./Card";
 
 const RenderCards = ({ data, type }) => {
 	return (

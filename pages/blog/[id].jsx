@@ -27,7 +27,7 @@ const Blog = ({ blog }) => {
 			<main className="container mx-auto py-2 px-5 md:px-10 space-y-3">
 				<button
 					onClick={() => router.back()}
-					className="text-blue-600 dark:text-blue-500 lg:text-lg focus:outline-none">
+					className="text-blue-600 dark:text-blue-500 lg:text-lg focus:outline-none print:hidden">
 					&larr; <span className="hover:underline">Go Back</span>
 				</button>
 
@@ -40,6 +40,15 @@ const Blog = ({ blog }) => {
 							<p className="prose lg:prose-lg dark:prose-invert">{excerpt}</p>
 							<p className="text-sm lg:text-base text-zinc-600 dark:text-zinc-400 font-light">
 								Published on {date} &bull; {time} minute read
+							</p>
+							<p className="hidden print:block text-sm lg:text-base text-zinc-600 dark:text-zinc-400 font-light italic">
+								By{" "}
+								<a
+									target="_blank"
+									rel="noopener noreferrer"
+									href="https://www.linkedin.com/in/vatsal-sakariya-1867a5191">
+									Vatsal Sakariya
+								</a>
 							</p>
 						</div>
 						<div

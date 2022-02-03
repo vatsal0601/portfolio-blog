@@ -1,7 +1,7 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ScrollButton from "../components/BackToTop";
-import "tailwindcss/tailwind.css";
+import "../styles/tailwind.css";
 
 const App = ({ Component, pageProps }) => {
 	return (
