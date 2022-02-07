@@ -32,7 +32,8 @@ const Navbar = () => {
 		const getDarkMode = () => {
 			if (
 				localStorage.theme === "dark" ||
-				(!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)
+				(!("theme" in localStorage) &&
+					window.matchMedia("(prefers-color-scheme: dark)").matches)
 			) {
 				document.documentElement.classList.add("dark");
 				localStorage.theme = "dark";
@@ -59,30 +60,30 @@ const Navbar = () => {
 
 	return (
 		<header
-			className={`w-full fixed top-0 z-50 bg-white dark:bg-zinc-900 border-b ${
+			className={`fixed top-0 z-50 w-full border-b bg-white dark:bg-zinc-900 ${
 				isScrolled ? "border-zinc-200 dark:border-zinc-800" : "border-transparent"
 			} transition-colors duration-300 print:hidden`}>
 			<ProgressBar />
 			<nav
-				className="container mx-auto py-3 px-5 md:px-10 flex items-center justify-between relative"
+				className="container relative mx-auto flex items-center justify-between py-3 px-5 md:px-10"
 				role="navigation">
 				<Link href="/">
-					<a className="text-3xl lg:text-4xl font-black tracking-tight text-zinc-900 dark:text-zinc-200 active:text-blue-600 transition-colors">
+					<a className="text-3xl font-black tracking-tight text-zinc-900 transition-colors active:text-blue-600 dark:text-zinc-200 lg:text-4xl">
 						VS
 					</a>
 				</Link>
 
 				<div className="flex items-center divide-x divide-zinc-200 dark:divide-zinc-800">
-					<ul className="flex items-center gap-1 lg:gap-5 pr-3 font-semibold">
+					<ul className="flex items-center gap-1 pr-3 font-semibold lg:gap-5">
 						{pageLinks.map(({ name, link }, index) => (
 							<li key={index}>
 								<Link href={link}>
 									<a
 										className={`${
 											router.pathname == link
-												? "text-zinc-900 dark:text-zinc-200 font-semibold"
-												: "text-zinc-600 dark:text-zinc-400 font-normal"
-										} active:text-blue-600 lg:text-lg transition-colors hover:bg-blue-100 dark:hover:bg-zinc-800 py-1 px-1 lg:px-2 rounded-md`}>
+												? "font-semibold text-zinc-900 dark:text-zinc-200"
+												: "font-normal text-zinc-600 dark:text-zinc-400"
+										} rounded-md py-1 px-1 transition-colors hover:bg-blue-100 active:text-blue-600 dark:hover:bg-zinc-800 lg:px-2 lg:text-lg`}>
 										{name}
 									</a>
 								</Link>
@@ -94,7 +95,7 @@ const Navbar = () => {
 							onClick={toggleDarkMode}
 							aria-label="Theme-Switcher"
 							name="Theme-Switcher"
-							className="w-5 lg:w-7 h-5 lg:h-7 text-zinc-900 dark:text-zinc-200 cursor-pointer focus:outline-none">
+							className="h-5 w-5 cursor-pointer text-zinc-900 focus:outline-none dark:text-zinc-200 lg:h-7 lg:w-7">
 							{isDarkMode ? <MoonIcon /> : <SunIcon />}
 						</button>
 					</div>

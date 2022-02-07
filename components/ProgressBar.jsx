@@ -46,7 +46,7 @@ const ProgressBar = () => {
 
 	return (
 		<div
-			className={`bg-blue-600 h-1 absolute top-0 left-0 w-full trasnform -translate-x-full transition-all ${
+			className={`trasnform absolute top-0 left-0 h-1 w-full -translate-x-full bg-blue-600 transition-all ${
 				(progress === 0 || progress === 100) && "opacity-0 duration-300"
 			}`}
 			style={{ transform: `translateX(${-100 + progress}%)` }}></div>

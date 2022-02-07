@@ -15,7 +15,7 @@ const Blog = ({ blog }) => {
 
 	if (blog?.error)
 		return (
-			<p className="container mx-auto px-5 md:px-10 lg:text-lg text-zinc-600 dark:text-zinc-400">
+			<p className="container mx-auto px-5 text-zinc-600 dark:text-zinc-400 md:px-10 lg:text-lg">
 				Oops, something went wrong please try again later
 			</p>
 		);
@@ -24,24 +24,24 @@ const Blog = ({ blog }) => {
 	return (
 		<>
 			<Head title={title.slice(2)} description={excerpt} keywords={keywords} />
-			<main className="container mx-auto py-2 px-5 md:px-10 space-y-3">
+			<main className="container mx-auto space-y-3 py-2 px-5 md:px-10">
 				<button
 					onClick={() => router.back()}
-					className="text-blue-600 dark:text-blue-500 lg:text-lg focus:outline-none print:hidden">
+					className="text-blue-600 focus:outline-none dark:text-blue-500 print:hidden lg:text-lg">
 					&larr; <span className="hover:underline">Go Back</span>
 				</button>
 
 				<article className="space-y-10 lg:space-y-16">
-					<section className="grid grid-cols-1 lg:grid-cols-2 gap-3 pb-5 lg:pb-10 border-b border-zinc-200 dark:border-zinc-800">
+					<section className="grid grid-cols-1 gap-3 border-b border-zinc-200 pb-5 dark:border-zinc-800 lg:grid-cols-2 lg:pb-10">
 						<div className="space-y-3 self-center">
-							<h1 className="text-3xl sm:text-4xl xl:text-5xl text-blue-600 dark:text-blue-500 font-bold tracking-tight">
+							<h1 className="text-3xl font-bold tracking-tight text-blue-600 dark:text-blue-500 sm:text-4xl xl:text-5xl">
 								{title}
 							</h1>
 							<p className="prose lg:prose-lg dark:prose-invert">{excerpt}</p>
-							<p className="text-sm lg:text-base text-zinc-600 dark:text-zinc-400 font-light">
+							<p className="text-sm font-light text-zinc-600 dark:text-zinc-400 lg:text-base">
 								Published on {date} &bull; {time} minute read
 							</p>
-							<p className="hidden print:block text-sm lg:text-base text-zinc-600 dark:text-zinc-400 font-light italic">
+							<p className="hidden text-sm font-light italic text-zinc-600 dark:text-zinc-400 print:block lg:text-base">
 								By{" "}
 								<a
 									target="_blank"
@@ -52,7 +52,9 @@ const Blog = ({ blog }) => {
 							</p>
 						</div>
 						<div
-							className={`rounded-md bg-zinc-300 dark:bg-zinc-600 ${isLoading && "animate-pulse"}`}>
+							className={`rounded-md bg-zinc-300 dark:bg-zinc-600 ${
+								isLoading && "animate-pulse"
+							}`}>
 							<Image
 								src={coverImageUrl}
 								alt={title}

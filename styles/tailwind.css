@@ -18,24 +18,12 @@
 		src: url(../public/fonts/JetBrainsMono.woff2) format("woff2");
 	}
 }
+
 code[class*="language-"],
 pre[class*="language-"] {
 	background: hsl(220, 13%, 18%);
 	color: hsl(220, 14%, 71%);
 	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
-	direction: ltr;
-	text-align: left;
-	white-space: pre;
-	word-spacing: normal;
-	word-break: normal;
-	line-height: 1.5;
-	-moz-tab-size: 2;
-	-o-tab-size: 2;
-	tab-size: 2;
-	-webkit-hyphens: none;
-	-moz-hyphens: none;
-	-ms-hyphens: none;
-	hyphens: none;
 }
 
 /* Selection */
@@ -56,13 +44,6 @@ pre[class*="language-"] *::selection {
 }
 
 /* Code blocks */
-pre[class*="language-"] {
-	padding: 1em;
-	margin: 0.5em 0;
-	overflow: auto;
-	border-radius: 0.3em;
-}
-
 .token.comment,
 .token.prolog,
 .token.cdata {
