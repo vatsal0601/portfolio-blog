@@ -13,7 +13,7 @@ const RenderPost = ({ content, toc, headingRef }) => {
 			</aside>
 			<section
 				ref={headingRef}
-				className="prose prose-zinc prose-blue prose-headings:scroll-m-20 prose-img:rounded-md dark:prose-invert lg:prose-lg lg:prose-headings:scroll-m-24">
+				className="prose lg:prose-headings:scroll-m-24 prose-zinc prose-a:font-semibold prose-a:underline-offset-4 prose-a:decoration-blue-600 dark:prose-a:decoration-blue-500 hover:prose-a:decoration-2 prose-headings:scroll-m-20 prose-img:rounded-md dark:prose-invert lg:prose-lg">
 				<Markdown content={content} />
 			</section>
 		</div>
