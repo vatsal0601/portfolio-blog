@@ -13,7 +13,7 @@ const About = () => {
 				description="About Vatsal Sakariya"
 				keywords="Portfolio, Vatsal Sakariya, About, Web Development"
 			/>
-			<main className="container mx-auto space-y-12 py-2 px-5 md:px-10 lg:space-y-16">
+			<main className="container space-y-12 lg:space-y-16">
 				<h1 className="text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-200 xl:text-5xl">
 					🙎 About
 				</h1>
@@ -36,24 +36,27 @@ const About = () => {
 						/>
 					</div>
 					<div className="mx-auto max-w-prose space-y-3">
-						<div className="prose lg:prose-lg dark:prose-invert">
+						<div className="prose dark:prose-invert lg:prose-lg">
 							<p>
-								Hey 👋 I am Vatsal Sakariya, a full stack developer currently living
-								in Gujarat, India
+								Hey 👋 I am Vatsal Sakariya, a full stack
+								developer currently living in Gujarat, India
 							</p>
 							<p>
-								Right now I am an undergraduate and I study at Nirma University 🏫
-								for my bachelor degree in Computer Science and Engineering. I did my
-								higher secondary in Utkarsh School of Excellence 🏢.
+								Right now I am an undergraduate and I study at
+								Nirma University 🏫 for my bachelor degree in
+								Computer Science and Engineering. I did my
+								higher secondary in Utkarsh School of Excellence
+								🏢.
 							</p>
 							<p>
-								I love working in the realm between design and code. Some stuff that
-								makes me excited are CSS, React, Design Systems, Component Kits, UI
+								I love working in the realm between design and
+								code. Some stuff that makes me excited are CSS,
+								React, Design Systems, Component Kits, UI
 								Animation and delightful interfaces ✨.
 							</p>
 							<p>
-								In my spare time I love being outdoors, training 🏋️‍♂️ and travelling
-								✈️.
+								In my spare time I love being outdoors, training
+								🏋️‍♂️ and travelling ✈️.
 							</p>
 						</div>
 						<div>

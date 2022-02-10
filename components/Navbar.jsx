@@ -61,11 +61,13 @@ const Navbar = () => {
 	return (
 		<header
 			className={`fixed top-0 z-50 w-full border-b bg-white dark:bg-zinc-900 ${
-				isScrolled ? "border-zinc-200 dark:border-zinc-800" : "border-transparent"
+				isScrolled
+					? "border-zinc-200 dark:border-zinc-800"
+					: "border-transparent"
 			} transition-colors duration-300 print:hidden`}>
 			<ProgressBar />
 			<nav
-				className="container relative mx-auto flex items-center justify-between py-3 px-5 md:px-10"
+				className="container relative flex items-center justify-between py-3"
 				role="navigation">
 				<Link href="/">
 					<a className="text-3xl font-black tracking-tight text-zinc-900 transition-colors active:text-blue-600 dark:text-zinc-200 lg:text-4xl">

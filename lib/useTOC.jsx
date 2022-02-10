@@ -22,7 +22,9 @@ export const useTOC = (headingRef) => {
 
 			const markdown = "";
 			parsedHeadings.forEach((element) => {
-				markdown += `${getTabs(element.depth)}- [${element.title}](#${element.id})`;
+				markdown += `${getTabs(element.depth)}- [${element.title}](#${
+					element.id
+				})`;
 				markdown += "\n";
 			});
 

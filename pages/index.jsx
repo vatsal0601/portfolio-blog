@@ -14,7 +14,7 @@ const Home = ({ projects, blogs }) => {
 				description="Vatsal's Portfolio"
 				keywords="Vatsal Sakariya, Portfolio, Web Development, Projects, Blogs"
 			/>
-			<main className="container mx-auto space-y-12 py-2 px-5 md:px-10 lg:space-y-16">
+			<main className="container space-y-12 lg:space-y-16">
 				<section className="grid-col-1 grid gap-3 md:grid-cols-2">
 					<div className="h-32 w-32 rounded-full border-2 border-blue-600 p-1 sm:h-56 sm:w-56 sm:p-2 md:place-self-center xl:h-96 xl:w-96 xl:p-3">
 						<Image
@@ -33,10 +33,11 @@ const Home = ({ projects, blogs }) => {
 						<h1 className="text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-200 xl:text-5xl">
 							Hi, my name is Vatsal.
 						</h1>
-						<p className="prose lg:prose-lg dark:prose-invert">
-							I am a full stack developer. Currently I am a student at Nirma
-							University. This is my personal website - where you will find all the
-							stuff I am currently doing and thinking about.
+						<p className="prose dark:prose-invert lg:prose-lg">
+							I am a full stack developer. Currently I am a
+							student at Nirma University. This is my personal
+							website - where you will find all the stuff I am
+							currently doing and thinking about.
 						</p>
 						<div className="flex items-center gap-3">
 							<a

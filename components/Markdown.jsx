@@ -4,7 +4,9 @@ import rehypeSlug from "rehype-slug";
 import rehypePrism from "rehype-prism-plus";
 
 const Markdown = ({ content }) => (
-	<ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSlug, rehypePrism]}>
+	<ReactMarkdown
+		remarkPlugins={[remarkGfm]}
+		rehypePlugins={[rehypeSlug, rehypePrism]}>
 		{content}
 	</ReactMarkdown>
 );

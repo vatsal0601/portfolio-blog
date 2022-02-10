@@ -11,4 +11,5 @@ const projectSchema = new Schema({
 	content: { type: String, required: true },
 });
 
-export const Project = mongoose.models.Project || mongoose.model("Project", projectSchema);
+export const Project =
+	mongoose.models.Project || mongoose.model("Project", projectSchema);

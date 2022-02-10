@@ -2,7 +2,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-const Card = ({ id, title, excerpt, image, time, date, github, link, type }) => {
+const Card = ({
+	id,
+	title,
+	excerpt,
+	image,
+	time,
+	date,
+	github,
+	link,
+	type,
+}) => {
 	const [isLoading, setIsLoading] = useState(true);
 
 	return (

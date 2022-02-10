@@ -8,7 +8,10 @@ const Header = ({ title, description, keywords }) => {
 			<meta name="keywords" content={keywords} />
 			<meta name="author" content="Vatsal Sakariya" />
 			<meta charSet="UTF-8" />
-			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+			<meta
+				name="viewport"
+				content="width=device-width, initial-scale=1.0"
+			/>
 			<link rel="icon" href="/favicon.ico" />
 		</Head>
 	);

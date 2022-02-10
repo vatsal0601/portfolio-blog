@@ -5,7 +5,15 @@ const RenderCards = ({ data, type }) => {
 		<div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
 			{data?.map((element) => {
 				if (type == "project") {
-					const { id, title, excerpt, coverImageUrl, date, github, link } = element;
+					const {
+						id,
+						title,
+						excerpt,
+						coverImageUrl,
+						date,
+						github,
+						link,
+					} = element;
 					return (
 						<Card
 							key={id}
@@ -20,7 +28,8 @@ const RenderCards = ({ data, type }) => {
 						/>
 					);
 				}
-				const { id, title, excerpt, coverImageUrl, date, time } = element;
+				const { id, title, excerpt, coverImageUrl, date, time } =
+					element;
 				return (
 					<Card
 						key={id}

@@ -15,16 +15,17 @@ const Project = ({ project }) => {
 
 	if (project?.error)
 		return (
-			<p className="container mx-auto px-5 text-zinc-600 dark:text-zinc-400 md:px-10 lg:text-lg">
+			<p className="container text-zinc-600 dark:text-zinc-400 lg:text-lg">
 				Oops, something went wrong please try again later
 			</p>
 		);
 
-	const { title, excerpt, coverImageUrl, date, github, link, content } = project;
+	const { title, excerpt, coverImageUrl, date, github, link, content } =
+		project;
 	return (
 		<>
 			<Head title={title.slice(2)} description={excerpt} />
-			<main className="container mx-auto space-y-3 py-2 px-5 md:px-10">
+			<main className="container space-y-3">
 				<button
 					onClick={() => router.back()}
 					className="text-blue-600 focus:outline-none dark:text-blue-500 print:hidden lg:text-lg">
@@ -37,7 +38,9 @@ const Project = ({ project }) => {
 							<h1 className="text-3xl font-bold tracking-tight text-blue-600 dark:text-blue-500 sm:text-4xl xl:text-5xl">
 								{title}
 							</h1>
-							<p className="prose lg:prose-lg dark:prose-invert">{excerpt}</p>
+							<p className="prose dark:prose-invert lg:prose-lg">
+								{excerpt}
+							</p>
 							<p className="space-x-1 text-sm text-blue-600 dark:text-blue-500 lg:space-x-3 lg:text-base">
 								<a
 									target="_blank"
@@ -84,7 +87,11 @@ const Project = ({ project }) => {
 							/>
 						</div>
 					</section>
-					<RenderPost content={content} headingRef={headingRef} toc={toc} />
+					<RenderPost
+						content={content}
+						headingRef={headingRef}
+						toc={toc}
+					/>
 				</article>
 			</main>
 		</>
