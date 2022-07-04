@@ -13,11 +13,11 @@ const Error500 = () => {
 					</h1>
 					<div className="space-y-1 lg:space-y-3">
 						<h2 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-200 xl:text-4xl">
-							Oops, there's something wrong from our end.
+							Oops, there&apos;s something wrong from our end.
 						</h2>
 						<p className="prose prose-zinc lg:prose-lg">
-							Try reloading the page or if that dosen't works come
-							back soon soon after some time after we fix the
+							Try reloading the page or if that dosen&apos;t works
+							come back soon soon after some time after we fix the
 							issue.
 						</p>
 					</div>
