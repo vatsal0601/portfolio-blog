@@ -76,7 +76,7 @@ const Navbar = () => {
 				</Link>
 
 				<div className="flex items-center divide-x divide-zinc-200 dark:divide-zinc-800">
-					<ul className="flex items-center gap-1 pr-3 font-semibold lg:gap-5">
+					<ul className="flex items-center space-x-1 pr-3 font-semibold lg:space-x-5">
 						{pageLinks.map(({ name, link }, index) => (
 							<li key={index}>
 								<Link href={link}>
@@ -95,7 +95,7 @@ const Navbar = () => {
 					<div className="pl-3">
 						<button
 							onClick={toggleDarkMode}
-							aria-label="Theme-Switcher"
+							aria-label="theme-switcher"
 							name="Theme-Switcher"
 							className="h-5 w-5 cursor-pointer text-zinc-900 focus:outline-none dark:text-zinc-200 lg:h-7 lg:w-7">
 							{isDarkMode ? <MoonIcon /> : <SunIcon />}

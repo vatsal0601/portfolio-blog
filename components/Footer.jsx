@@ -11,7 +11,7 @@ const socialLinks = [
 	{ name: "GitHub", link: "https://github.com/vatsal0601" },
 	{
 		name: "LinkedIn",
-		link: "https://www.linkedin.com/in/vatsal-sakariya-1867a5191",
+		link: "https://www.linkedin.com/in/vatsal-sakariya",
 	},
 	{ name: "Twitter", link: "https://twitter.com/vatsal0601" },
 	{ name: "Instagram", link: "https://www.instagram.com/vatsal_sakariya" },
@@ -21,7 +21,7 @@ const Footer = () => {
 	return (
 		<footer className="absolute bottom-0 z-0 w-full space-y-3 border-t border-zinc-200 bg-white py-3 text-center dark:border-zinc-800 dark:bg-zinc-900 print:hidden">
 			<div className="flex justify-evenly">
-				<div className="flex flex-col gap-3">
+				<div className="flex flex-col space-y-3">
 					{pageLinks.map(({ name, link }, index) => (
 						<Link href={link} key={index}>
 							<a className="text-sm text-zinc-600 transition-colors active:text-blue-600 dark:text-zinc-400 lg:text-base">
@@ -30,7 +30,7 @@ const Footer = () => {
 						</Link>
 					))}
 				</div>
-				<div className="flex flex-col gap-3">
+				<div className="flex flex-col space-y-3">
 					{socialLinks.map(({ name, link }, index) => (
 						<a
 							key={index}

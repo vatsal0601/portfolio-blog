@@ -1,6 +1,6 @@
-import Head from "../../components/Header";
+import Head from "@components/Header";
 import Image from "next/image";
-import src from "../../public/images/image.jpg";
+import src from "../public/images/image.jpg";
 import { useState } from "react";
 
 const About = () => {
@@ -17,9 +17,9 @@ const About = () => {
 				<h1 className="text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-200 xl:text-5xl">
 					🙎 About
 				</h1>
-				<section className="container mx-auto space-y-5 px-5 md:px-10">
+				<section className="mx-auto space-y-5 px-5 md:px-10">
 					<div
-						className={`mx-auto rounded-md bg-zinc-300 dark:bg-zinc-600 lg:w-3/4 xl:w-3/5 ${
+						className={`mx-auto max-w-prose rounded-md bg-zinc-300 dark:bg-zinc-600 lg:text-lg ${
 							isLoading && "animate-pulse"
 						}`}>
 						<Image
@@ -35,8 +35,8 @@ const About = () => {
 							priority="true"
 						/>
 					</div>
-					<div className="mx-auto max-w-prose space-y-3">
-						<div className="prose dark:prose-invert lg:prose-lg">
+					<div className="mx-auto max-w-prose space-y-3 lg:text-lg">
+						<div className="prose prose-zinc dark:prose-invert lg:prose-lg">
 							<p>
 								Hey 👋 I am Vatsal Sakariya, a full stack
 								developer currently living in Gujarat, India

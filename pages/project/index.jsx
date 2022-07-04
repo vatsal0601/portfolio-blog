@@ -1,7 +1,4 @@
-import Head from "../../components/Header";
-import RenderCards from "../../components/RenderCards";
-import { connectDatabase } from "../../lib/db";
-import { fetchProjects } from "../../lib/fetch";
+import Head from "@components/Header";
 
 const AllProjects = ({ projects }) => {
 	if (projects?.error)
@@ -21,23 +18,9 @@ const AllProjects = ({ projects }) => {
 				<h1 className="text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-200 xl:text-5xl">
 					⚒️ Projects
 				</h1>
-				<RenderCards data={projects.projects} type="project" />
 			</main>
 		</>
 	);
 };
 
 export default AllProjects;
-
-export const getStaticProps = async () => {
-	let projects;
-	connectDatabase();
-	projects = await fetchProjects(10);
-	projects = { projects };
-	return {
-		props: {
-			projects,
-		},
-		revalidate: 1,
-	};
-};

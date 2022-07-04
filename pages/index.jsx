@@ -1,12 +1,29 @@
-import Head from "../components/Header";
+import Head from "@components/Header";
 import Image from "next/image";
 import Link from "next/link";
-import RenderCards from "../components/RenderCards";
+import RenderCards from "@components/RenderCards";
 import src from "../public/images/image.jpg";
-import { connectDatabase } from "../lib/db";
-import { fetchProjects, fetchBlogs } from "../lib/fetch";
+import { ArrowNarrowRightIcon, DownloadIcon } from "@heroicons/react/solid";
+import { useQuery } from "@apollo/client";
+import { initializeApollo } from "@lib/apolloClient";
+import { GetRecentBlogsProjects } from "@graphql/queries/home";
 
-const Home = ({ projects, blogs }) => {
+const Home = () => {
+	const {
+		data: {
+			blogs: { data: blogs },
+			projects: { data: projects },
+		},
+		error,
+	} = useQuery(GetRecentBlogsProjects);
+
+	if (error)
+		return (
+			<p className="container text-zinc-600 dark:text-zinc-400 lg:text-lg">
+				Oops, something went wrong please try again later
+			</p>
+		);
+
 	return (
 		<>
 			<Head
@@ -33,27 +50,27 @@ const Home = ({ projects, blogs }) => {
 						<h1 className="text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-200 xl:text-5xl">
 							Hi, my name is Vatsal.
 						</h1>
-						<p className="prose dark:prose-invert lg:prose-lg">
-							I am a full stack developer. Currently I am a
-							student at Nirma University. This is my personal
-							website - where you will find all the stuff I am
-							currently doing and thinking about.
+						<p className="prose prose-zinc dark:prose-invert lg:prose-lg">
+							I am a frontend developer. Currently I am a student
+							at Nirma University. This is my personal website -
+							where you will find all the stuff I am currently
+							doing and thinking about.
 						</p>
-						<div className="flex items-center gap-3">
+						<div className="flex items-center space-x-3">
 							<a
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://drive.google.com/file/d/1_vRWL3y2DhnKowacPnnvHKD-EUd58f9o/view?usp=sharing"
-								className="rounded-md bg-blue-200 px-3 py-1 text-sm font-semibold text-blue-700 transition-colors active:bg-blue-300 lg:text-base">
-								Download Resume &darr;
+								className="inline-flex items-center space-x-1 rounded-md bg-blue-200 px-3 py-1 text-sm font-semibold text-blue-700 transition-colors active:bg-blue-300 lg:text-base">
+								<DownloadIcon className="h-4 w-4 lg:h-5 lg:w-5" />
+								<span>Download Resume</span>
 							</a>
-							<div>
-								<Link href="/about">
-									<a className="text-sm text-blue-600 dark:text-blue-500 lg:text-base">
-										More about me &rarr;
-									</a>
-								</Link>
-							</div>
+							<Link href="/about">
+								<a className="inline-flex items-center space-x-1 text-sm text-blue-600 dark:text-blue-500 lg:text-base">
+									<span>More about me</span>
+									<ArrowNarrowRightIcon className="h-4 w-4 lg:h-5 lg:w-5" />
+								</a>
+							</Link>
 						</div>
 					</div>
 				</section>
@@ -61,25 +78,13 @@ const Home = ({ projects, blogs }) => {
 					<h2 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-200 xl:text-4xl">
 						⚒️ Projects
 					</h2>
-					{projects?.error ? (
-						<p className="text-zinc-600 dark:text-zinc-400 lg:text-lg">
-							Oops, something went wrong please try again later
-						</p>
-					) : (
-						<RenderCards type="project" data={projects.projects} />
-					)}
+					<RenderCards type="project" data={projects} />
 				</section>
 				<section className="space-y-3">
 					<h2 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-200 xl:text-4xl">
 						📝 Blogs
 					</h2>
-					{blogs?.error ? (
-						<p className="text-zinc-600 dark:text-zinc-400 lg:text-lg">
-							Oops, something went wrong please try again later
-						</p>
-					) : (
-						<RenderCards type="blog" data={blogs.blogs} />
-					)}
+					<RenderCards type="blog" data={blogs} />
 				</section>
 			</main>
 		</>
@@ -89,18 +94,13 @@ const Home = ({ projects, blogs }) => {
 export default Home;
 
 export const getStaticProps = async () => {
-	let projects, blogs;
-	connectDatabase();
-	projects = await fetchProjects(3);
-	projects = { projects };
-	blogs = await fetchBlogs(3);
-	blogs = { blogs };
+	const apolloClient = initializeApollo();
+	await apolloClient.query({ query: GetRecentBlogsProjects });
 
 	return {
 		props: {
-			projects,
-			blogs,
+			initialApolloState: apolloClient.cache.extract(),
 		},
-		revalidate: 1,
+		revalidate: 60,
 	};
 };

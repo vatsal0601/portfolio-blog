@@ -1,27 +1,37 @@
-import Head from "../../components/Header";
+import Head from "@components/Header";
 import Image from "next/image";
-import RenderPost from "../../components/RenderPost";
+import RenderPost from "@components/RenderPost";
+import getConfig from "next/config";
+import { ArrowNarrowLeftIcon } from "@heroicons/react/solid";
 import { useState, useRef } from "react";
 import { useRouter } from "next/router";
-import { connectDatabase } from "../../lib/db";
-import { fetchBlog, fetchBlogIds } from "../../lib/fetch";
-import { useTOC } from "../../lib/useTOC";
+import { useTOC } from "@lib/useTOC";
+import { initializeApollo } from "@lib/apolloClient";
+import { useQuery } from "@apollo/client";
+import { GetBlog, GetAllSlugs } from "@graphql/queries/blog";
+import { renderDate } from "@lib/renderDate";
 
-const Blog = ({ blog }) => {
+const Blog = ({ slug }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const router = useRouter();
 	const headingRef = useRef(null);
 	const [toc] = useTOC(headingRef);
+	const {
+		data: {
+			blogs: { data },
+		},
+		error,
+	} = useQuery(GetBlog, { variables: { slug } });
 
-	if (blog?.error)
+	if (error)
 		return (
 			<p className="container text-zinc-600 dark:text-zinc-400 lg:text-lg">
 				Oops, something went wrong please try again later
 			</p>
 		);
 
-	const { title, excerpt, coverImageUrl, date, time, keywords, content } =
-		blog;
+	const { title, excerpt, cover, createdAt, readTime, keywords, content } =
+		data[0].attributes;
 	return (
 		<>
 			<Head
@@ -31,9 +41,11 @@ const Blog = ({ blog }) => {
 			/>
 			<main className="container space-y-3">
 				<button
+					aria-label="go-back"
 					onClick={() => router.back()}
-					className="text-blue-600 focus:outline-none dark:text-blue-500 print:hidden lg:text-lg">
-					&larr; <span className="hover:underline">Go Back</span>
+					className="inline-flex items-center space-x-1 text-blue-600 focus:outline-none dark:text-blue-500 print:hidden lg:text-lg">
+					<ArrowNarrowLeftIcon className="h-4 w-4 lg:h-5 lg:w-5" />
+					<span className="hover:underline">Go Back</span>
 				</button>
 
 				<article className="space-y-10 lg:space-y-16">
@@ -46,7 +58,8 @@ const Blog = ({ blog }) => {
 								{excerpt}
 							</p>
 							<p className="text-sm font-light text-zinc-600 dark:text-zinc-400 lg:text-base">
-								Published on {date} &bull; {time} minute read
+								Published on {renderDate(createdAt)} &bull;{" "}
+								{readTime} minute read
 							</p>
 							<p className="hidden text-sm font-light italic text-zinc-600 dark:text-zinc-400 print:block lg:text-base">
 								By{" "}
@@ -63,7 +76,7 @@ const Blog = ({ blog }) => {
 								isLoading && "animate-pulse"
 							}`}>
 							<Image
-								src={coverImageUrl}
+								src={cover}
 								alt={title}
 								width="16"
 								height="9"
@@ -89,31 +102,45 @@ const Blog = ({ blog }) => {
 export default Blog;
 
 export const getStaticPaths = async () => {
-	let blogIds = [];
-	connectDatabase();
-	blogIds = await fetchBlogIds();
-	blogIds = blogIds.map((id) => ({
-		params: {
-			id,
-		},
-	}));
+	const { serverRuntimeConfig } = getConfig();
+	try {
+		const res = await fetch(`${serverRuntimeConfig.BACKEND_URL}/graphql`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ query: GetAllSlugs }),
+		});
+		const slugsData = await res.json();
+		const {
+			data: {
+				blogs: { data },
+			},
+		} = slugsData;
+		const slugs = data.map(({ attributes: { slug } }) => ({
+			params: { slug },
+		}));
 
-	return {
-		paths: blogIds,
-		fallback: true,
-	};
+		return {
+			paths: slugs,
+			fallback: true,
+		};
+	} catch (err) {
+		console.log(err);
+		return {
+			paths: [],
+			fallback: true,
+		};
+	}
 };
 
-export const getStaticProps = async (context) => {
-	let blog;
-	connectDatabase();
-	const { id } = context.params;
-	blog = await fetchBlog(id);
+export const getStaticProps = async ({ params: { slug } }) => {
+	const apolloClient = initializeApollo();
+	await apolloClient.query({ query: GetBlog, variables: { slug } });
 
 	return {
 		props: {
-			blog,
+			slug,
+			initialApolloState: apolloClient.cache.extract(),
 		},
-		revalidate: 1,
+		revalidate: 60,
 	};
 };

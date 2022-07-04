@@ -1,35 +1,47 @@
-import Head from "../../components/Header";
+import Head from "@components/Header";
 import Image from "next/image";
-import RenderPost from "../../components/RenderPost";
+import RenderPost from "@components/RenderPost";
+import getConfig from "next/config";
+import { ArrowNarrowLeftIcon } from "@heroicons/react/solid";
 import { useState, useRef } from "react";
 import { useRouter } from "next/router";
-import { connectDatabase } from "../../lib/db";
-import { fetchProject, fetchProjectIds } from "../../lib/fetch";
-import { useTOC } from "../../lib/useTOC";
+import { useTOC } from "@lib/useTOC";
+import { initializeApollo } from "@lib/apolloClient";
+import { useQuery } from "@apollo/client";
+import { GetProject, GetAllSlugs } from "@graphql/queries/project";
+import { renderDate } from "@lib/renderDate";
 
-const Project = ({ project }) => {
+const Project = ({ slug }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const router = useRouter();
 	const headingRef = useRef(null);
 	const [toc] = useTOC(headingRef);
+	const {
+		data: {
+			projects: { data },
+		},
+		error,
+	} = useQuery(GetProject, { variables: { slug } });
 
-	if (project?.error)
+	if (error)
 		return (
 			<p className="container text-zinc-600 dark:text-zinc-400 lg:text-lg">
 				Oops, something went wrong please try again later
 			</p>
 		);
 
-	const { title, excerpt, coverImageUrl, date, github, link, content } =
-		project;
+	const { title, description, cover, date, github, link, content } =
+		data[0].attributes;
 	return (
 		<>
-			<Head title={title.slice(2)} description={excerpt} />
+			<Head title={title.slice(2)} description={description} />
 			<main className="container space-y-3">
 				<button
+					aria-label="go-back"
 					onClick={() => router.back()}
-					className="text-blue-600 focus:outline-none dark:text-blue-500 print:hidden lg:text-lg">
-					&larr; <span className="hover:underline">Go Back</span>
+					className="inline-flex items-center space-x-1 text-blue-600 focus:outline-none dark:text-blue-500 print:hidden lg:text-lg">
+					<ArrowNarrowLeftIcon className="h-4 w-4 lg:h-5 lg:w-5" />
+					<span className="hover:underline">Go Back</span>
 				</button>
 
 				<article className="space-y-3">
@@ -39,7 +51,7 @@ const Project = ({ project }) => {
 								{title}
 							</h1>
 							<p className="prose dark:prose-invert lg:prose-lg">
-								{excerpt}
+								{description}
 							</p>
 							<p className="space-x-1 text-sm text-blue-600 dark:text-blue-500 lg:space-x-3 lg:text-base">
 								<a
@@ -58,7 +70,7 @@ const Project = ({ project }) => {
 								</a>
 							</p>
 							<p className="text-sm font-light text-zinc-600 dark:text-zinc-400 lg:text-base">
-								Published on {date}
+								Published on {renderDate(date)}
 							</p>
 							<p className="hidden text-sm font-light italic text-zinc-600 dark:text-zinc-400 print:block lg:text-base">
 								By{" "}
@@ -75,7 +87,7 @@ const Project = ({ project }) => {
 								isLoading && "animate-pulse"
 							}`}>
 							<Image
-								src={coverImageUrl}
+								src={cover}
 								alt={title}
 								width="16"
 								height="9"
@@ -101,31 +113,45 @@ const Project = ({ project }) => {
 export default Project;
 
 export const getStaticPaths = async () => {
-	let projectIds = [];
-	connectDatabase();
-	projectIds = await fetchProjectIds();
-	projectIds = projectIds.map((id) => ({
-		params: {
-			id,
-		},
-	}));
+	const { serverRuntimeConfig } = getConfig();
+	try {
+		const res = await fetch(`${serverRuntimeConfig.BACKEND_URL}/graphql`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ query: GetAllSlugs }),
+		});
+		const slugsData = await res.json();
+		const {
+			data: {
+				projects: { data },
+			},
+		} = slugsData;
+		const slugs = data.map(({ attributes: { slug } }) => ({
+			params: { slug },
+		}));
 
-	return {
-		paths: projectIds,
-		fallback: true,
-	};
+		return {
+			paths: slugs,
+			fallback: true,
+		};
+	} catch (err) {
+		console.log(err);
+		return {
+			paths: [],
+			fallback: true,
+		};
+	}
 };
 
-export const getStaticProps = async (context) => {
-	let project;
-	connectDatabase();
-	const { id } = context.params;
-	project = await fetchProject(id);
+export const getStaticProps = async ({ params: { slug } }) => {
+	const apolloClient = initializeApollo();
+	await apolloClient.query({ query: GetProject, variables: { slug } });
 
 	return {
 		props: {
-			project: project,
+			slug,
+			initialApolloState: apolloClient.cache.extract(),
 		},
-		revalidate: 1,
+		revalidate: 60,
 	};
 };

@@ -1,13 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { renderDate } from "@lib/renderDate";
 
 const Card = ({
-	id,
 	title,
-	excerpt,
-	image,
-	time,
+	slug,
+	text,
+	cover,
+	readTime,
 	date,
 	github,
 	link,
@@ -21,10 +22,10 @@ const Card = ({
 				className={`rounded-md bg-zinc-300 dark:bg-zinc-600 ${
 					isLoading && "animate-pulse"
 				}`}>
-				<Link href={`/${type}/${id}`}>
+				<Link href={`/${type}/${slug}`}>
 					<a tabIndex={-1}>
 						<Image
-							src={image}
+							src={cover}
 							alt={title}
 							width="16"
 							height="9"
@@ -38,14 +39,16 @@ const Card = ({
 				</Link>
 			</div>
 			<div className="space-y-1 py-1 lg:py-3">
-				<Link href={`/${type}/${id}`}>
+				<Link href={`/${type}/${slug}`}>
 					<a>
 						<h3 className="text-2xl font-semibold tracking-tight text-zinc-900 transition-colors active:text-blue-600 dark:text-zinc-200 xl:text-3xl">
 							{title}
 						</h3>
 					</a>
 				</Link>
-				<p className="prose dark:prose-invert lg:prose-lg">{excerpt}</p>
+				<p className="prose prose-zinc dark:prose-invert lg:prose-lg">
+					{text}
+				</p>
 				{type === "project" && (
 					<p className="space-x-1 text-sm text-blue-600 dark:text-blue-500 lg:space-x-3 lg:text-base">
 						<a
@@ -65,8 +68,13 @@ const Card = ({
 					</p>
 				)}
 				<p className="text-sm font-light text-zinc-600 dark:text-zinc-400 lg:text-base">
-					Published on {date} {type === "blog" && <span>&bull;</span>}{" "}
-					{type === "blog" && `${time} minute read`}
+					Published on {renderDate(date)}{" "}
+					{type === "blog" && (
+						<span>
+							<span>&bull;</span>{" "}
+							<span>{readTime} minute read</span>
+						</span>
+					)}
 				</p>
 			</div>
 		</div>
