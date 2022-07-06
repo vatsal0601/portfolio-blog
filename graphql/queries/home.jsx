@@ -11,6 +11,13 @@ export const GetRecentBlogsProjects = gql`
 					slug
 					readTime
 					createdAt
+					collection {
+						data {
+							attributes {
+								name
+							}
+						}
+					}
 				}
 			}
 		}

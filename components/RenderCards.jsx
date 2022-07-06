@@ -1,10 +1,10 @@
 import Card from "./Card";
 
-const RenderCards = ({ data, type }) => {
+const RenderCards = ({ data, type, name }) => {
 	return (
 		<div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
 			{data?.map((element, index) => {
-				const { slug, title, cover } = element.attributes;
+				const { slug, title, cover, collection } = element.attributes;
 				switch (type) {
 					case "blog":
 						const { readTime, excerpt, createdAt } =
@@ -18,6 +18,13 @@ const RenderCards = ({ data, type }) => {
 								cover={cover}
 								date={createdAt}
 								readTime={readTime}
+								collection={
+									name
+										? name
+										: collection.data
+										? collection.data.attributes.name
+										: null
+								}
 								type={type}
 							/>
 						);

@@ -29,3 +29,21 @@ export const GetAllSlugs = /* GraphQL */ `
 		}
 	}
 `;
+
+export const GetAllProjects = gql`
+	query {
+		projects(sort: "createdAt:desc") {
+			data {
+				attributes {
+					title
+					description
+					cover
+					slug
+					link
+					github
+					date
+				}
+			}
+		}
+	}
+`;

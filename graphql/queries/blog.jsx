@@ -31,3 +31,27 @@ export const GetAllSlugs = /* GraphQL */ `
 		}
 	}
 `;
+
+export const GetAllCollections = gql`
+	query {
+		collections {
+			data {
+				attributes {
+					name
+					blogs {
+						data {
+							attributes {
+								title
+								excerpt
+								cover
+								slug
+								readTime
+								createdAt
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+`;
