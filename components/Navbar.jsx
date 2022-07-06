@@ -70,7 +70,7 @@ const Navbar = () => {
 				className="container relative flex items-center justify-between py-3"
 				role="navigation">
 				<Link href="/">
-					<a className="text-3xl font-black tracking-tight text-zinc-900 transition-colors active:text-blue-600 dark:text-zinc-200 lg:text-4xl">
+					<a className="text-3xl font-bold tracking-tight text-zinc-900 transition-colors active:text-blue-600 dark:text-zinc-200 lg:text-4xl">
 						VS
 					</a>
 				</Link>

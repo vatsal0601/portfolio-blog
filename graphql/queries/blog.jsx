@@ -14,6 +14,13 @@ export const GetBlog = gql`
 					createdAt
 					updatedAt
 					content
+					collection {
+						data {
+							attributes {
+								name
+							}
+						}
+					}
 				}
 			}
 		}

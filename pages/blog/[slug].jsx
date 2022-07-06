@@ -30,8 +30,20 @@ const Blog = ({ slug }) => {
 			</p>
 		);
 
-	const { title, excerpt, cover, createdAt, readTime, keywords, content } =
-		data[0].attributes;
+	const {
+		title,
+		excerpt,
+		cover,
+		createdAt,
+		readTime,
+		keywords,
+		content,
+		collection: {
+			data: {
+				attributes: { name: collection },
+			},
+		},
+	} = data[0].attributes;
 	return (
 		<>
 			<Head
@@ -61,6 +73,13 @@ const Blog = ({ slug }) => {
 								Published on {renderDate(createdAt)} &bull;{" "}
 								{readTime} minute read
 							</p>
+							{collection && (
+								<p>
+									<span className="rounded-md bg-blue-100 px-1 py-0.5 font-semibold text-blue-600 lg:px-2 lg:py-1 lg:text-lg">
+										{collection}
+									</span>
+								</p>
+							)}
 							<p className="hidden text-sm font-light italic text-zinc-600 dark:text-zinc-400 print:block lg:text-base">
 								By{" "}
 								<a
