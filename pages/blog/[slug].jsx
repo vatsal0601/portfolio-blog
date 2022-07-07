@@ -38,11 +38,7 @@ const Blog = ({ slug }) => {
 		readTime,
 		keywords,
 		content,
-		collection: {
-			data: {
-				attributes: { name: collection },
-			},
-		},
+		collection: { data: collection },
 	} = data[0].attributes;
 	return (
 		<>
@@ -76,7 +72,7 @@ const Blog = ({ slug }) => {
 							{collection && (
 								<p>
 									<span className="rounded-md bg-blue-100 px-1 py-0.5 font-semibold text-blue-600 lg:px-2 lg:py-1 lg:text-lg">
-										{collection}
+										{collection.attributes.name}
 									</span>
 								</p>
 							)}
@@ -143,7 +139,7 @@ export const getStaticPaths = async () => {
 			fallback: true,
 		};
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 		return {
 			paths: [],
 			fallback: true,
@@ -152,14 +148,25 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params: { slug } }) => {
-	const apolloClient = initializeApollo();
-	await apolloClient.query({ query: GetBlog, variables: { slug } });
+	if (!slug) {
+		throw new Error("Invalid slug");
+	}
 
-	return {
-		props: {
-			slug,
-			initialApolloState: apolloClient.cache.extract(),
-		},
-		revalidate: 60,
-	};
+	try {
+		const apolloClient = initializeApollo();
+		await apolloClient.query({ query: GetBlog, variables: { slug } });
+
+		return {
+			props: {
+				slug,
+				initialApolloState: apolloClient.cache.extract(),
+			},
+			revalidate: 60,
+		};
+	} catch (err) {
+		console.error(err);
+		return {
+			notFound: true,
+		};
+	}
 };

@@ -135,7 +135,7 @@ export const getStaticPaths = async () => {
 			fallback: true,
 		};
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 		return {
 			paths: [],
 			fallback: true,
@@ -144,14 +144,25 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params: { slug } }) => {
-	const apolloClient = initializeApollo();
-	await apolloClient.query({ query: GetProject, variables: { slug } });
+	if (!slug) {
+		throw new Error("Invalid slug");
+	}
 
-	return {
-		props: {
-			slug,
-			initialApolloState: apolloClient.cache.extract(),
-		},
-		revalidate: 60,
-	};
+	try {
+		const apolloClient = initializeApollo();
+		await apolloClient.query({ query: GetProject, variables: { slug } });
+
+		return {
+			props: {
+				slug,
+				initialApolloState: apolloClient.cache.extract(),
+			},
+			revalidate: 60,
+		};
+	} catch (err) {
+		console.error(err);
+		return {
+			notFound: true,
+		};
+	}
 };
