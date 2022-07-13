@@ -1,7 +1,7 @@
 import Head from "@components/Header";
 import RenderCards from "@components/RenderCards";
-import { useQuery } from "@apollo/client";
-import { initializeApollo } from "@lib/apolloClient";
+import { client } from "@lib/gqlClient";
+import useSWR, { unstable_serialize } from "swr";
 import { GetAllProjects } from "@graphql/queries/project";
 
 const AllProjects = () => {
@@ -10,7 +10,7 @@ const AllProjects = () => {
 			projects: { data: projects },
 		},
 		error,
-	} = useQuery(GetAllProjects);
+	} = useSWR({ query: GetAllProjects, id: "GetAllProjects" });
 
 	if (error)
 		return (
@@ -38,12 +38,16 @@ const AllProjects = () => {
 export default AllProjects;
 
 export const getStaticProps = async () => {
-	const apolloClient = initializeApollo();
-	await apolloClient.query({ query: GetAllProjects });
+	const data = await client.request(GetAllProjects);
 
 	return {
 		props: {
-			initialApolloState: apolloClient.cache.extract(),
+			fallback: {
+				[unstable_serialize({
+					query: GetAllProjects,
+					id: "GetAllProjects",
+				})]: data,
+			},
 		},
 		revalidate: 60,
 	};

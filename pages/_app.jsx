@@ -1,14 +1,12 @@
+import "../styles/tailwind.css";
 import Navbar from "@components/Navbar";
 import Footer from "@components/Footer";
 import ScrollButton from "@components/BackToTop";
 import Script from "next/script";
-import "../styles/tailwind.css";
-import { ApolloProvider } from "@apollo/client";
-import { useApollo } from "@lib/apolloClient";
+import { SWRConfig } from "swr";
+import { fetcher } from "@lib/gqlClient";
 
 const App = ({ Component, pageProps }) => {
-	const apolloClient = useApollo(pageProps.initialApolloState);
-
 	return (
 		<>
 			<Script
@@ -29,12 +27,12 @@ const App = ({ Component, pageProps }) => {
 				}
 			</Script>
 
-			<ApolloProvider client={apolloClient}>
+			<SWRConfig value={{ fetcher, fallback: pageProps.fallback }}>
 				<Navbar />
 				<ScrollButton />
 				<Component {...pageProps} />
 				<Footer />
-			</ApolloProvider>
+			</SWRConfig>
 		</>
 	);
 };

@@ -1,7 +1,7 @@
 import Head from "@components/Header";
 import RenderCards from "@components/RenderCards";
-import { useQuery } from "@apollo/client";
-import { initializeApollo } from "@lib/apolloClient";
+import { client } from "@lib/gqlClient";
+import useSWR, { unstable_serialize } from "swr";
 import { GetAllCollections } from "@graphql/queries/blog";
 
 const AllBlogs = () => {
@@ -10,7 +10,7 @@ const AllBlogs = () => {
 			collections: { data: collections },
 		},
 		error,
-	} = useQuery(GetAllCollections);
+	} = useSWR({ query: GetAllCollections, id: "GetAllCollections" });
 
 	if (error)
 		return (
@@ -62,12 +62,16 @@ const AllBlogs = () => {
 export default AllBlogs;
 
 export const getStaticProps = async () => {
-	const apolloClient = initializeApollo();
-	await apolloClient.query({ query: GetAllCollections });
+	const data = await client.request(GetAllCollections);
 
 	return {
 		props: {
-			initialApolloState: apolloClient.cache.extract(),
+			fallback: {
+				[unstable_serialize({
+					query: GetAllCollections,
+					id: "GetAllCollections",
+				})]: data,
+			},
 		},
 		revalidate: 60,
 	};

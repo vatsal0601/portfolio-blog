@@ -1,15 +1,14 @@
 import Head from "@components/Header";
 import Image from "next/image";
 import RenderPost from "@components/RenderPost";
-import getConfig from "next/config";
 import { ArrowNarrowLeftIcon } from "@heroicons/react/solid";
 import { useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { useTOC } from "@lib/useTOC";
-import { initializeApollo } from "@lib/apolloClient";
-import { useQuery } from "@apollo/client";
-import { GetBlog, GetAllSlugs } from "@graphql/queries/blog";
 import { renderDate } from "@lib/renderDate";
+import { client } from "@lib/gqlClient";
+import useSWR, { unstable_serialize } from "swr";
+import { GetBlog, GetAllSlugs } from "@graphql/queries/blog";
 
 const Blog = ({ slug }) => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -21,7 +20,7 @@ const Blog = ({ slug }) => {
 			blogs: { data },
 		},
 		error,
-	} = useQuery(GetBlog, { variables: { slug } });
+	} = useSWR({ query: GetBlog, variables: { slug }, id: "GetBlog" });
 
 	if (error)
 		return (
@@ -46,6 +45,7 @@ const Blog = ({ slug }) => {
 				title={title.slice(2)}
 				description={excerpt}
 				keywords={keywords}
+				image={cover}
 			/>
 			<main className="container space-y-3">
 				<button
@@ -117,32 +117,23 @@ const Blog = ({ slug }) => {
 export default Blog;
 
 export const getStaticPaths = async () => {
-	const { serverRuntimeConfig } = getConfig();
 	try {
-		const res = await fetch(`${serverRuntimeConfig.BACKEND_URL}/graphql`, {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ query: GetAllSlugs }),
-		});
-		const slugsData = await res.json();
 		const {
-			data: {
-				blogs: { data },
-			},
-		} = slugsData;
+			blogs: { data },
+		} = await client.request(GetAllSlugs);
 		const slugs = data.map(({ attributes: { slug } }) => ({
 			params: { slug },
 		}));
 
 		return {
 			paths: slugs,
-			fallback: true,
+			fallback: "blocking",
 		};
 	} catch (err) {
 		console.error(err);
 		return {
 			paths: [],
-			fallback: true,
+			fallback: "blocking",
 		};
 	}
 };
@@ -153,13 +144,18 @@ export const getStaticProps = async ({ params: { slug } }) => {
 	}
 
 	try {
-		const apolloClient = initializeApollo();
-		await apolloClient.query({ query: GetBlog, variables: { slug } });
+		const data = await client.request(GetBlog, { slug });
 
 		return {
 			props: {
 				slug,
-				initialApolloState: apolloClient.cache.extract(),
+				fallback: {
+					[unstable_serialize({
+						query: GetBlog,
+						variables: { slug },
+						id: "GetBlog",
+					})]: data,
+				},
 			},
 			revalidate: 60,
 		};

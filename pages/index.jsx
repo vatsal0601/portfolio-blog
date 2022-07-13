@@ -1,11 +1,11 @@
+import src from "../public/images/image.jpg";
 import Head from "@components/Header";
 import Image from "next/image";
 import Link from "next/link";
 import RenderCards from "@components/RenderCards";
-import src from "../public/images/image.jpg";
 import { ArrowNarrowRightIcon, DownloadIcon } from "@heroicons/react/solid";
-import { useQuery } from "@apollo/client";
-import { initializeApollo } from "@lib/apolloClient";
+import { client } from "@lib/gqlClient";
+import useSWR, { unstable_serialize } from "swr";
 import { GetRecentBlogsProjects } from "@graphql/queries/home";
 
 const Home = () => {
@@ -15,7 +15,7 @@ const Home = () => {
 			projects: { data: projects },
 		},
 		error,
-	} = useQuery(GetRecentBlogsProjects);
+	} = useSWR({ query: GetRecentBlogsProjects, id: "GetRecentBlogsProjects" });
 
 	if (error)
 		return (
@@ -94,12 +94,16 @@ const Home = () => {
 export default Home;
 
 export const getStaticProps = async () => {
-	const apolloClient = initializeApollo();
-	await apolloClient.query({ query: GetRecentBlogsProjects });
+	const data = await client.request(GetRecentBlogsProjects);
 
 	return {
 		props: {
-			initialApolloState: apolloClient.cache.extract(),
+			fallback: {
+				[unstable_serialize({
+					query: GetRecentBlogsProjects,
+					id: "GetRecentBlogsProjects",
+				})]: data,
+			},
 		},
 		revalidate: 60,
 	};

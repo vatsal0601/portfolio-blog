@@ -1,15 +1,14 @@
 import Head from "@components/Header";
 import Image from "next/image";
 import RenderPost from "@components/RenderPost";
-import getConfig from "next/config";
 import { ArrowNarrowLeftIcon } from "@heroicons/react/solid";
 import { useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { useTOC } from "@lib/useTOC";
-import { initializeApollo } from "@lib/apolloClient";
-import { useQuery } from "@apollo/client";
-import { GetProject, GetAllSlugs } from "@graphql/queries/project";
 import { renderDate } from "@lib/renderDate";
+import { client } from "@lib/gqlClient";
+import useSWR, { unstable_serialize } from "swr";
+import { GetProject, GetAllSlugs } from "@graphql/queries/project";
 
 const Project = ({ slug }) => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -21,7 +20,7 @@ const Project = ({ slug }) => {
 			projects: { data },
 		},
 		error,
-	} = useQuery(GetProject, { variables: { slug } });
+	} = useSWR({ query: GetProject, variables: { slug }, id: "GetProject" });
 
 	if (error)
 		return (
@@ -34,7 +33,11 @@ const Project = ({ slug }) => {
 		data[0].attributes;
 	return (
 		<>
-			<Head title={title.slice(2)} description={description} />
+			<Head
+				title={title.slice(2)}
+				description={description}
+				image={cover}
+			/>
 			<main className="container space-y-3">
 				<button
 					aria-label="go-back"
@@ -113,32 +116,23 @@ const Project = ({ slug }) => {
 export default Project;
 
 export const getStaticPaths = async () => {
-	const { serverRuntimeConfig } = getConfig();
 	try {
-		const res = await fetch(`${serverRuntimeConfig.BACKEND_URL}/graphql`, {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ query: GetAllSlugs }),
-		});
-		const slugsData = await res.json();
 		const {
-			data: {
-				projects: { data },
-			},
-		} = slugsData;
+			projects: { data },
+		} = await client.request(GetAllSlugs);
 		const slugs = data.map(({ attributes: { slug } }) => ({
 			params: { slug },
 		}));
 
 		return {
 			paths: slugs,
-			fallback: true,
+			fallback: "blocking",
 		};
 	} catch (err) {
 		console.error(err);
 		return {
 			paths: [],
-			fallback: true,
+			fallback: "blocking",
 		};
 	}
 };
@@ -149,13 +143,18 @@ export const getStaticProps = async ({ params: { slug } }) => {
 	}
 
 	try {
-		const apolloClient = initializeApollo();
-		await apolloClient.query({ query: GetProject, variables: { slug } });
+		const data = await client.request(GetProject, { slug });
 
 		return {
 			props: {
 				slug,
-				initialApolloState: apolloClient.cache.extract(),
+				fallback: {
+					[unstable_serialize({
+						query: GetProject,
+						variables: { slug },
+						id: "GetProject",
+					})]: data,
+				},
 			},
 			revalidate: 60,
 		};

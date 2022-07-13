@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-const Header = ({ title, description, keywords }) => {
+const Header = ({ title, description, keywords, image }) => {
 	return (
 		<Head>
 			<title>{title}</title>
@@ -13,6 +13,16 @@ const Header = ({ title, description, keywords }) => {
 				content="width=device-width, initial-scale=1.0"
 			/>
 			<link rel="icon" href="/favicon.ico" />
+			<meta property="og:title" content={title} />
+			<meta property="og:type" content="article" />
+			<meta property="article:author" content="Vatsal Sakariya" />
+			<meta property="profile:first_name" content="Vatsal" />
+			<meta property="profile:last_name" content="Sakariya" />
+			<meta property="article:section" content="Technology" />
+			<meta property="article:tag" content={keywords} />
+			<meta property="og:image" content={image} />
+			<meta property="og:image:alt" content={title} />
+			<meta property="og:description" content={description} />
 		</Head>
 	);
 };
@@ -21,6 +31,7 @@ Header.defaultProps = {
 	title: "Vatsal Sakariya",
 	description: "Vatsal Sakariya's Portfolio",
 	keywords: "Vatsal Sakariya, Web Development, Portfolio, Projects, Blogs",
+	image: "https://vatsalsakariya.vercel.app/images/image.jpg",
 };
 
 export default Header;

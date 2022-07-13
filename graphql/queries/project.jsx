@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from "graphql-request";
 
 export const GetProject = gql`
 	query ($slug: String!) {
@@ -18,7 +18,7 @@ export const GetProject = gql`
 	}
 `;
 
-export const GetAllSlugs = /* GraphQL */ `
+export const GetAllSlugs = gql`
 	query {
 		projects {
 			data {
