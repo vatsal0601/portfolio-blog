@@ -1,12 +1,11 @@
 # Portfolio
 
-This portfolio is built using NextJS, TailwindCSS, React-Markdown, React-GFM for the front-end part and GraphQL,Apollo-Server-Micro, Mongoose, Micro-CORS for the backend part.
+This portfolio is built using NextJS, TailwindCSS, React-Markdown, React-GFM and useSWR for the front-end part and strapi CMS with GraphQL for the backend part.
 
 For Experimenting
 
 -   Clone the repo
--   Connect with your MongoDB database by adding connection string to `DATABASE_URL` in a .env file
--   Add `BACKEND_URL` to the .env file which will be `<main-url>/api` and if you are developing locally than it will be `http://localhost:3000/api`
+-   Add your strapi url to `NEXT_PUBLIC_API_URL` in a .env file (By default strapi url will be `http:localhost:1337`)
 -   Now run the following commands in the terminal
 
 ```bash
