@@ -42,7 +42,7 @@ const Card = ({
 			<div className="space-y-1 py-1 lg:py-3">
 				{collection && (
 					<p>
-						<span className="rounded-md bg-blue-100 px-1 py-0.5 text-xs font-semibold text-blue-600 lg:px-2 lg:py-1 lg:text-sm">
+						<span className="rounded-md bg-blue-200 px-1 py-0.5 text-xs font-semibold text-blue-700 lg:px-2 lg:py-1 lg:text-sm">
 							{collection}
 						</span>
 					</p>
