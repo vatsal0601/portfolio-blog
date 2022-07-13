@@ -7,7 +7,14 @@ export const GetRecentBlogsProjects = gql`
 				attributes {
 					title
 					excerpt
-					cover
+					cover {
+						data {
+							attributes {
+								url
+								formats
+							}
+						}
+					}
 					slug
 					readTime
 					createdAt
@@ -26,7 +33,14 @@ export const GetRecentBlogsProjects = gql`
 				attributes {
 					title
 					description
-					cover
+					cover {
+						data {
+							attributes {
+								url
+								formats
+							}
+						}
+					}
 					slug
 					link
 					github

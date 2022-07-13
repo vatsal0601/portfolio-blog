@@ -9,7 +9,14 @@ export const GetBlog = gql`
 					excerpt
 					readTime
 					slug
-					cover
+					cover {
+						data {
+							attributes {
+								url
+								formats
+							}
+						}
+					}
 					keywords
 					createdAt
 					updatedAt
@@ -50,7 +57,14 @@ export const GetAllCollections = gql`
 							attributes {
 								title
 								excerpt
-								cover
+								cover {
+									data {
+										attributes {
+											url
+											formats
+										}
+									}
+								}
 								slug
 								readTime
 								createdAt

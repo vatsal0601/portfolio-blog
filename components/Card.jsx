@@ -1,7 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
+import getConfig from "next/config";
 import { useState } from "react";
 import { renderDate } from "@lib/renderDate";
+
+const { publicRuntimeConfig } = getConfig();
 
 const Card = ({
 	title,
@@ -26,7 +29,7 @@ const Card = ({
 				<Link href={`/${type}/${slug}`}>
 					<a tabIndex={-1}>
 						<Image
-							src={cover}
+							src={`${publicRuntimeConfig.BACKEND_URL}${cover}`}
 							alt={title}
 							width="16"
 							height="9"

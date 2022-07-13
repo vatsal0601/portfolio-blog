@@ -1,6 +1,7 @@
 import Head from "@components/Header";
 import Image from "next/image";
 import RenderPost from "@components/RenderPost";
+import getConfig from "next/config";
 import { ArrowNarrowLeftIcon } from "@heroicons/react/solid";
 import { useState, useRef } from "react";
 import { useRouter } from "next/router";
@@ -9,6 +10,8 @@ import { renderDate } from "@lib/renderDate";
 import { client } from "@lib/gqlClient";
 import useSWR, { unstable_serialize } from "swr";
 import { GetBlog, GetAllSlugs } from "@graphql/queries/blog";
+
+const { publicRuntimeConfig } = getConfig();
 
 const Blog = ({ slug }) => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -32,7 +35,11 @@ const Blog = ({ slug }) => {
 	const {
 		title,
 		excerpt,
-		cover,
+		cover: {
+			data: {
+				attributes: { url, formats },
+			},
+		},
 		createdAt,
 		readTime,
 		keywords,
@@ -45,7 +52,9 @@ const Blog = ({ slug }) => {
 				title={title.slice(2)}
 				description={excerpt}
 				keywords={keywords}
-				image={cover}
+				image={`${publicRuntimeConfig.BACKEND_URL}${
+					formats ? formats.thumbnail.url : url
+				}`}
 			/>
 			<main className="container space-y-3">
 				<button
@@ -91,7 +100,7 @@ const Blog = ({ slug }) => {
 								isLoading && "animate-pulse"
 							}`}>
 							<Image
-								src={cover}
+								src={`${publicRuntimeConfig.BACKEND_URL}${url}`}
 								alt={title}
 								width="16"
 								height="9"

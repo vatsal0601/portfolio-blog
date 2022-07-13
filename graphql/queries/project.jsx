@@ -9,7 +9,14 @@ export const GetProject = gql`
 					description
 					link
 					github
-					cover
+					cover {
+						data {
+							attributes {
+								url
+								formats
+							}
+						}
+					}
 					date
 					content
 				}
@@ -37,7 +44,14 @@ export const GetAllProjects = gql`
 				attributes {
 					title
 					description
-					cover
+					cover {
+						data {
+							attributes {
+								url
+								formats
+							}
+						}
+					}
 					slug
 					link
 					github
