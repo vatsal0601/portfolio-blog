@@ -39,7 +39,7 @@ export const GetAllSlugs = gql`
 
 export const GetAllProjects = gql`
 	query {
-		projects(sort: "createdAt:desc") {
+		projects(sort: "date:desc") {
 			data {
 				attributes {
 					title

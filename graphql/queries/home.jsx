@@ -28,7 +28,7 @@ export const GetRecentBlogsProjects = gql`
 				}
 			}
 		}
-		projects(sort: "createdAt:desc", pagination: { limit: 3 }) {
+		projects(sort: "date:desc", pagination: { limit: 3 }) {
 			data {
 				attributes {
 					title

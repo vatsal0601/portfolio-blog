@@ -52,7 +52,7 @@ export const GetAllCollections = gql`
 			data {
 				attributes {
 					name
-					blogs {
+					blogs(sort: "createdAt:asc") {
 						data {
 							attributes {
 								title
