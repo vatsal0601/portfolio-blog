@@ -5,6 +5,7 @@ module.exports = {
 			"images.unsplash.com",
 			"localhost",
 			"vatsal0601-portfolio-blog.herokuapp.com",
+			"res.cloudinary.com",
 		],
 	},
 	env: {
