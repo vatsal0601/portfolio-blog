@@ -38,7 +38,7 @@ const About = () => {
 					<div className="mx-auto max-w-prose space-y-3 lg:text-lg">
 						<div className="prose prose-zinc dark:prose-invert lg:prose-lg">
 							<p>
-								Hey 👋 I am Vatsal Sakariya, a full stack
+								Hey 👋 I am Vatsal Sakariya, a frontend
 								developer currently living in Gujarat, India
 							</p>
 							<p>
