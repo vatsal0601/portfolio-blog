@@ -13,6 +13,7 @@ const Header = ({ title, description, keywords, image }) => {
 				content="width=device-width, initial-scale=1.0"
 			/>
 			<link rel="icon" href="/favicon.ico" />
+			<meta property="og:site_name" content="Vatsal Sakariya" />
 			<meta property="og:title" content={title} />
 			<meta property="og:type" content="article" />
 			<meta property="article:author" content="Vatsal Sakariya" />
@@ -21,8 +22,17 @@ const Header = ({ title, description, keywords, image }) => {
 			<meta property="article:section" content="Technology" />
 			<meta property="article:tag" content={keywords} />
 			<meta property="og:image" content={image} />
+			<meta property="og:image:secure_url" content={image} />
 			<meta property="og:image:alt" content={title} />
 			<meta property="og:description" content={description} />
+			<meta name="twitter:card" content="summary_large_image" />
+			<meta name="twitter:image" content={image} />
+			<meta name="twitter:site" content="@vatsal0601" />
+			<meta name="twitter:creator" content="@vatsal0601" />
+			<meta
+				property="og:url"
+				content="https://vatsalsakariya.vercel.app/"
+			/>
 		</Head>
 	);
 };
