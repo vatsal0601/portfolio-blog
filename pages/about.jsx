@@ -15,7 +15,7 @@ const About = () => {
 			/>
 			<main className="container space-y-12 lg:space-y-16">
 				<h1 className="text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-200 xl:text-5xl">
-					🙎 About
+					🙎🏻 About
 				</h1>
 				<section className="mx-auto space-y-5 px-5 md:px-10">
 					<div
