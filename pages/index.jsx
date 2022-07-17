@@ -48,13 +48,13 @@ const Home = () => {
 					</div>
 					<div className="space-y-1 lg:space-y-3 lg:self-center">
 						<h1 className="text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-200 xl:text-5xl">
-							Hi, my name is Vatsal.
+							Hi 👋🏻, I&apos;m Vatsal.
 						</h1>
 						<p className="prose prose-zinc dark:prose-invert lg:prose-lg">
-							I am a frontend developer. Currently I am a student
-							at Nirma University. This is my personal website -
-							where you will find all the stuff I am currently
-							doing and thinking about.
+							A front-end developer, currently studying at Nirma
+							University. This is my personal website, where you
+							will find all the stuff I am currently doing and
+							thinking about.
 						</p>
 						<div className="flex items-center space-x-3">
 							<a
@@ -76,15 +76,27 @@ const Home = () => {
 				</section>
 				<section className="space-y-3">
 					<h2 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-200 xl:text-4xl">
-						⚒️ Projects
+						⚒️ Recent Projects
 					</h2>
 					<RenderCards type="project" data={projects} />
+					<Link href="/project">
+						<a className="inline-flex items-center space-x-1 rounded-md bg-blue-200 px-3 py-1 text-sm font-semibold text-blue-700 transition-colors active:bg-blue-300 lg:text-base">
+							<span>Show all projects</span>
+							<ArrowNarrowRightIcon className="h-4 w-4 lg:h-5 lg:w-5" />
+						</a>
+					</Link>
 				</section>
 				<section className="space-y-3">
 					<h2 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-200 xl:text-4xl">
-						📝 Blogs
+						📝 Recent Blogs
 					</h2>
 					<RenderCards type="blog" data={blogs} />
+					<Link href="/blog">
+						<a className="inline-flex items-center space-x-1 rounded-md bg-blue-200 px-3 py-1 text-sm font-semibold text-blue-700 transition-colors active:bg-blue-300 lg:text-base">
+							<span>Show all blogs</span>
+							<ArrowNarrowRightIcon className="h-4 w-4 lg:h-5 lg:w-5" />
+						</a>
+					</Link>
 				</section>
 			</main>
 		</>

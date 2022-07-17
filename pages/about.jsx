@@ -38,25 +38,25 @@ const About = () => {
 					<div className="mx-auto max-w-prose space-y-3 lg:text-lg">
 						<div className="prose prose-zinc dark:prose-invert lg:prose-lg">
 							<p>
-								Hey 👋 I am Vatsal Sakariya, a frontend
-								developer currently living in Gujarat, India
+								Hey 👋🏻, I am Vatsal Sakariya, a frontend
+								developer currently living in Gujarat, India.
 							</p>
 							<p>
-								Right now I am an undergraduate and I study at
-								Nirma University 🏫 for my bachelor degree in
-								Computer Science and Engineering. I did my
-								higher secondary in Utkarsh School of Excellence
-								🏢.
+								Right now I am an undergraduate and I am
+								studying at Nirma University 🏫 for my
+								bachelor's degree in Computer Science and
+								Engineering. I did my higher secondary at
+								Utkarsh School of Excellence 🏢.
 							</p>
 							<p>
 								I love working in the realm between design and
 								code. Some stuff that makes me excited are CSS,
 								React, Design Systems, Component Kits, UI
-								Animation and delightful interfaces ✨.
+								Animation, and delightful interfaces ✨.
 							</p>
 							<p>
-								In my spare time I love being outdoors, training
-								🏋️‍♂️ and travelling ✈️.
+								In my spare time, I love being outdoors,
+								training 🏋️‍♂️ and travelling ✈️.
 							</p>
 						</div>
 						<div>

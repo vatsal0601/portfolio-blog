@@ -59,20 +59,24 @@ const Card = ({
 				</p>
 				{type === "project" && (
 					<p className="space-x-1 text-sm text-blue-600 dark:text-blue-500 lg:space-x-3 lg:text-base">
-						<a
-							target="_blank"
-							rel="noopener noreferrer"
-							href={github}
-							className="hover:underline">
-							GitHub
-						</a>
-						<a
-							target="_blank"
-							rel="noopener noreferrer"
-							href={link}
-							className="hover:underline">
-							Link
-						</a>
+						{github && (
+							<a
+								target="_blank"
+								rel="noopener noreferrer"
+								href={github}
+								className="hover:underline">
+								GitHub
+							</a>
+						)}
+						{link && (
+							<a
+								target="_blank"
+								rel="noopener noreferrer"
+								href={link}
+								className="hover:underline">
+								Link
+							</a>
+						)}
 					</p>
 				)}
 				<p className="text-sm font-light text-zinc-600 dark:text-zinc-400 lg:text-base">
