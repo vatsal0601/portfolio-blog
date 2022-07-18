@@ -28,7 +28,7 @@ const Home = () => {
 		<>
 			<Head
 				title="Vatsal Sakariya"
-				description="Vatsal's Portfolio"
+				description="Vatsal Sakariya's Portfolio"
 				keywords="Vatsal Sakariya, Portfolio, Web Development, Projects, Blogs"
 			/>
 			<main className="container space-y-12 lg:space-y-16">
