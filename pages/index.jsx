@@ -60,7 +60,7 @@ const Home = () => {
 							<a
 								target="_blank"
 								rel="noopener noreferrer"
-								href="https://drive.google.com/file/d/1_vRWL3y2DhnKowacPnnvHKD-EUd58f9o/view?usp=sharing"
+								href="/resume.pdf"
 								className="inline-flex items-center space-x-1 rounded-md bg-blue-200 px-3 py-1 text-sm font-semibold text-blue-700 transition-colors active:bg-blue-300 lg:text-base">
 								<DownloadIcon className="h-4 w-4 lg:h-5 lg:w-5" />
 								<span>Download Resume</span>

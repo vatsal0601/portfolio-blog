@@ -3,10 +3,24 @@ import Navbar from "@components/Navbar";
 import Footer from "@components/Footer";
 import ScrollButton from "@components/BackToTop";
 import Script from "next/script";
+import Head from "next/head";
+import { useState, useEffect } from "react";
 import { SWRConfig } from "swr";
 import { fetcher } from "@lib/gqlClient";
 
 const App = ({ Component, pageProps }) => {
+	const [isFirefox, setIsFirefox] = useState(false);
+
+	useEffect(() => {
+		const userAgent = window.navigator.userAgent;
+		const browserDetails =
+			userAgent.match(
+				/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i
+			) || [];
+
+		if (browserDetails[1] === "Firefox") setIsFirefox(true);
+	}, []);
+
 	return (
 		<>
 			<Script
@@ -26,6 +40,24 @@ const App = ({ Component, pageProps }) => {
 						`
 				}
 			</Script>
+
+			{isFirefox && (
+				<Head>
+					<link
+						rel="preconnect"
+						href="https://fonts.googleapis.com"
+					/>
+					<link
+						rel="preconnect"
+						href="https://fonts.gstatic.com"
+						crossOrigin
+					/>
+					<link
+						href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+						rel="stylesheet"
+					/>
+				</Head>
+			)}
 
 			<SWRConfig value={{ fetcher, fallback: pageProps.fallback }}>
 				<Navbar />
